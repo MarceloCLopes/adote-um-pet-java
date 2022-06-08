@@ -9,23 +9,17 @@ import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mcl.adoteumpet.api.adocao.dtos.AdocaoRequest;
 import br.com.mcl.adoteumpet.api.adocao.dtos.AdocaoResponse;
-import br.com.mcl.adoteumpet.api.adocao.mappers.AdocaoMapper;
-import br.com.mcl.adoteumpet.core.repositories.AdocaoRepository;
+import br.com.mcl.adoteumpet.api.adocao.services.AdocaoService;
 
 @RestController
 public class AdocaoController {
 
   @Autowired
-  private AdocaoRepository adocaoRepository;
-
-  @Autowired
-  private AdocaoMapper adocaoMapper;
+  private AdocaoService adocaoService;
 
   @PostMapping("/api/adocoes")
   @ResponseStatus(code = HttpStatus.CREATED)
   public AdocaoResponse create(@RequestBody AdocaoRequest adocaoRequest) {
-    var adocao = adocaoMapper.toModel(adocaoRequest);
-    var createdAdocao = adocaoRepository.save(adocao);
-    return adocaoMapper.toResponse(createdAdocao);
+    return adocaoService.create(adocaoRequest);
   }
 }

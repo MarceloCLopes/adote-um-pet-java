@@ -7,23 +7,16 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import br.com.mcl.adoteumpet.api.pet.dtos.PetResponse;
-import br.com.mcl.adoteumpet.api.pet.mappers.PetMapper;
-import br.com.mcl.adoteumpet.core.repositories.PetRepository;
+import br.com.mcl.adoteumpet.api.pet.services.PetService;
 
 @RestController
 public class PetController {
 
   @Autowired
-  private PetRepository petRepository;
-
-  @Autowired
-  private PetMapper petMapper;
+  private PetService petService;
 
   @GetMapping("/api/pets")
   public List<PetResponse> findAll() {
-    return petRepository.findAll()
-        .stream()
-        .map(petMapper::toResponse)
-        .toList();
+    return petService.findAll();
   }
 }
