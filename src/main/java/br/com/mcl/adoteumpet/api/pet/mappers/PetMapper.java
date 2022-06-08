@@ -2,6 +2,7 @@ package br.com.mcl.adoteumpet.api.pet.mappers;
 
 import org.springframework.stereotype.Component;
 
+import br.com.mcl.adoteumpet.api.pet.dtos.PetRequest;
 import br.com.mcl.adoteumpet.api.pet.dtos.PetResponse;
 import br.com.mcl.adoteumpet.core.models.Pet;
 
@@ -15,6 +16,14 @@ public class PetMapper {
         .history(pet.getHistory())
         .photo(pet.getPhoto())
         .build();
-
   }
+
+  public Pet toModel(PetRequest petRequest) {
+    return Pet.builder()
+        .name(petRequest.getName())
+        .history(petRequest.getHistory())
+        .photo(petRequest.getPhoto())
+        .build();
+  }
+
 }
