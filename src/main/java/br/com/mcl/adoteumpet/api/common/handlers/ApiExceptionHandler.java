@@ -16,6 +16,8 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.fasterxml.jackson.databind.PropertyNamingStrategies.SnakeCaseStrategy;
+
 import br.com.mcl.adoteumpet.api.common.dtos.ErrorResponse;
 
 @RestControllerAdvice
@@ -40,9 +42,12 @@ public class ApiExceptionHandler extends ResponseEntityExceptionHandler {
   }
 
   private Map<String, List<String>> convertFieldErrors(List<FieldError> fieldErrors) {
+
+    final SnakeCaseStrategy snakeCaseStrategy = new SnakeCaseStrategy();
+
     var errors = new HashMap<String, List<String>>();
     fieldErrors.stream().forEach(fieldError -> {
-      var field = fieldError.getField();
+      var field = snakeCaseStrategy.translate(fieldError.getField());
       if (errors.containsKey(field)) {
         errors.get(field).add(fieldError.getDefaultMessage());
       } else {
