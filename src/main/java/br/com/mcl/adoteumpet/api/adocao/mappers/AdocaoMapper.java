@@ -19,20 +19,22 @@ public class AdocaoMapper {
   private PetMapper petMapper;
 
   public Adocao toModel(AdocaoRequest adocaoRequest) {
-    var adocao = new Adocao();
-    adocao.setEmail(adocaoRequest.getEmail());
-    adocao.setAmount(adocaoRequest.getAmount());
-    adocao.setPet(petRepository.findByIdOrElseThrow(adocaoRequest.getPetId()));
-    return adocao;
+
+    return Adocao.builder()
+        .email(adocaoRequest.getEmail())
+        .amount(adocaoRequest.getAmount())
+        .pet(petRepository.findByIdOrElseThrow(adocaoRequest.getPetId()))
+        .build();
   }
 
   public AdocaoResponse toResponse(Adocao adocao) {
-    var adocaoResponse = new AdocaoResponse();
-    adocaoResponse.setId(adocao.getId());
-    adocaoResponse.setEmail(adocao.getEmail());
-    adocaoResponse.setAmount(adocao.getAmount());
-    adocaoResponse.setPet(petMapper.toResponse(adocao.getPet()));
-    return adocaoResponse;
+
+    return AdocaoResponse.builder()
+        .id(adocao.getId())
+        .email(adocao.getEmail())
+        .amount(adocao.getAmount())
+        .pet(petMapper.toResponse(adocao.getPet()))
+        .build();
   }
 
 }
