@@ -1,9 +1,8 @@
 package br.com.mcl.adoteumpet.core.repositories;
 
-import javax.persistence.EntityNotFoundException;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 
+import br.com.mcl.adoteumpet.core.exceptions.PetNotFoundException;
 import br.com.mcl.adoteumpet.core.models.Pet;
 
 public interface PetRepository extends JpaRepository<Pet, Long> {
@@ -13,6 +12,6 @@ public interface PetRepository extends JpaRepository<Pet, Long> {
     if (petOptional.isPresent()) {
       return petOptional.get();
     }
-    throw new EntityNotFoundException("Pet não encontrado");
+    throw new PetNotFoundException();
   }
 }
